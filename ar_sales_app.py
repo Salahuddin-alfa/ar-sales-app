@@ -25,13 +25,13 @@ SCOPE = [
 # Load credentials from Streamlit secrets
 @st.cache_resource
 def get_gsheet():
-        # Fix private key formatting (important for Streamlit secrets)
+    # Fix private key formatting (important for Streamlit secrets)
     service_account_info = dict(st.secrets["gcp_service_account"])
+
     if "private_key" in service_account_info:
-        service_account_info = dict(st.secrets["gcp_service_account"])
-    if "private_key" in service_account_info:
-        # Correctly convert escaped newlines to real newlines
         pk = service_account_info["private_key"]
+        # Convert escaped 
+ into real newlines
         service_account_info["private_key"] = pk.replace("\n", "
 ")
 
