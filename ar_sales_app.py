@@ -30,10 +30,8 @@ def get_gsheet():
 
     if "private_key" in service_account_info:
         pk = service_account_info["private_key"]
-        # Convert escaped 
- into real newlines
-        service_account_info["private_key"] = pk.replace("\n", "
-")
+                # Convert escaped \n into real newlines
+        service_account_info["private_key"] = pk.replace("\\n", "\n")
 
     creds = Credentials.from_service_account_info(
         service_account_info, scopes=SCOPE
