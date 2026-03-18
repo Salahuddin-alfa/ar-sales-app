@@ -25,8 +25,14 @@ SCOPE = [
 # Load credentials from Streamlit secrets
 @st.cache_resource
 def get_gsheet():
+        # Fix private key formatting (important for Streamlit secrets)
+    service_account_info = dict(st.secrets["gcp_service_account"])
+    if "private_key" in service_account_info:
+        service_account_info["private_key"] = service_account_info["private_key"].replace("\n", "
+")
+
     creds = Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"], scopes=SCOPE
+        service_account_info, scopes=SCOPE
     )
     client = gspread.authorize(creds)
     sheet = client.open("AR_App_Data").sheet1
